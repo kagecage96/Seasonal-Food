@@ -58,7 +58,6 @@ class ShunScraper
         csv << ['vegitable', vegitable.name, vegitable.image_url, vegitable.page_url, vegitable.articles.to_json, vegitables.first.shun_array]
       end
     end
-    binding.pry
   end
 
   def fetch_detail_data!(vegitables, start_index)

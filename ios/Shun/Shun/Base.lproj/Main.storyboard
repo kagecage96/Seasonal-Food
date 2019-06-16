@@ -62,7 +62,7 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Xm9-gM-GEp">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="w66-Kt-7VA">
                                                 <rect key="frame" x="0.0" y="50" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -75,19 +75,17 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qg-Rh-bHV">
-                                                    <rect key="frame" x="8" y="35" width="359" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qg-Rh-bHV">
+                                                    <rect key="frame" x="8" y="15" width="42" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstItem="5Qg-Rh-bHV" firstAttribute="leading" secondItem="qPL-e8-a4B" secondAttribute="leadingMargin" id="bc5-MH-dOn"/>
-                                                <constraint firstItem="5Qg-Rh-bHV" firstAttribute="top" secondItem="qPL-e8-a4B" secondAttribute="topMargin" constant="7" id="l43-fK-qQ0"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="5Qg-Rh-bHV" secondAttribute="trailing" id="lVA-ek-nfG"/>
-                                            </constraints>
+                                            <connections>
+                                                <outlet property="label" destination="5Qg-Rh-bHV" id="Vur-3p-Tpw"/>
+                                            </connections>
                                         </collectionReusableView>
                                     </collectionView>
                                 </subviews>
