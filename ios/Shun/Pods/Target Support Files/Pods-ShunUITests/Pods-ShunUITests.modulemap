@@ -1,0 +1,6 @@
+framework module Pods_ShunUITests {
+  umbrella header "Pods-ShunUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
