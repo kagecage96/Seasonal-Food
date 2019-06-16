@@ -55,7 +55,7 @@ class ShunScraper
     CSV.open('vegitable.csv', 'w') do |csv|
       csv << HEADER
       vegitables.each do |vegitable|
-        csv << ['vegitable', vegitable.name, vegitable.image_url, vegitable.page_url, vegitable.articles.to_json, vegitables.first.shun_array]
+        csv << ['vegitable', vegitable.name, vegitable.image_url, vegitable.page_url, vegitable.articles.to_json, vegitable.shun_array]
       end
     end
   end

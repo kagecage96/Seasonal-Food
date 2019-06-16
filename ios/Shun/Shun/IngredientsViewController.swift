@@ -3,31 +3,44 @@ import Firebase
 import SDWebImage
 
 class IngredientsViewController: UIViewController {
-    enum IngredientSection: Int {
+    internal enum IngredientSection: Int {
         case seafood = 0
         case vegitable = 1
         case fruit = 2
         case others = 3
     }
 
-    @IBOutlet weak var seasonSelectionButton: NSLayoutConstraint!
+    @IBOutlet weak var monthTextField: UITextField!
     @IBOutlet weak var ingredientsCollectionView: UICollectionView!
 
-    private var vegitables: [Ingredient] = []
-    private var seafoods: [Ingredient] = []
-    private var fruits: [Ingredient] = []
-    private var otherIngredients: [Ingredient] = []
-
+    private var ingredients: [Ingredient] = []
     private var ingredientsListener: ListenerRegistration?
-
     private let headerTitles = ["Seafood", "Vegitable", "Fruit", "Others"]
-
     private let db = Firestore.firestore()
+
+    var selectedMonth: Int = 1
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.title = "Seasonal Food"
+
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.tintColor = .red
+        toolBar.sizeToFit()
+
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPicker))
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        monthTextField.inputAccessoryView = toolBar
+
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        monthTextField.inputView = pickerView
+
         ingredientsCollectionView.delegate = self
         ingredientsCollectionView.dataSource = self
         ingredientsCollectionView.register(UINib(nibName: "IngredientCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "IngredientCollectionViewCell")
@@ -43,12 +56,22 @@ class IngredientsViewController: UIViewController {
         })
     }
 
+    @objc private func donePicker() {
+        monthTextField.resignFirstResponder()
+    }
+
+    @objc private func cancelPicker() {
+        monthTextField.placeholder = "選択してください"
+        monthTextField.resignFirstResponder()
+    }
+
     private func handleDocumentChange(_ change: DocumentChange) {
         switch change.type {
         case .added:
             insertNewIngredient(document: change.document)
         default:
-            print("hoge")
+            //TODO
+            print("TODO")
         }
     }
 
@@ -56,81 +79,62 @@ class IngredientsViewController: UIViewController {
         guard let ingredient = Ingredient(document: document) else {
             return
         }
-        switch ingredient.category {
-        case .seafood:
-            seafoods.append(ingredient)
-        case .vegitable:
-            vegitables.append(ingredient)
-        case .fruit:
-            fruits.append(ingredient)
-        case .other:
-            otherIngredients.append(ingredient)
-        }
+        ingredients.append(ingredient)
         ingredientsCollectionView.reloadData()
+    }
+
+    private func ingredients(from category: Ingredient.Category, month: Int) -> [Ingredient] {
+        return ingredients.filter({ (ingredient) -> Bool in
+            return ingredient.category == category && ingredient.isSeason(month: month)
+        })
+    }
+
+    private func ingredients(from section: Int, month: Int) -> [Ingredient] {
+        guard let ingredientSection = IngredientSection(rawValue: section) else {
+            return []
+        }
+
+        switch ingredientSection {
+        case .seafood:
+            return ingredients(from: .seafood, month: selectedMonth)
+        case .vegitable:
+            return ingredients(from: .vegitable, month: selectedMonth)
+        case .fruit:
+            return ingredients(from: .fruit, month: selectedMonth)
+        case .others:
+            return ingredients(from: .other, month: selectedMonth)
+        }
     }
 }
 
 extension IngredientsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
-        guard let ingredientSection = IngredientSection(rawValue: section) else {
-            return 0
-        }
-
-        var count = 0
-
-        switch ingredientSection {
-        case .seafood:
-            count = seafoods.count
-        case .vegitable:
-            count = vegitables.count
-        case .fruit:
-            count = fruits.count
-        case .others:
-            count = otherIngredients.count
-        }
+        let count = ingredients(from: section, month: selectedMonth).count
         return arrangeInSectionCount(count: count)
     }
 
     private func arrangeInSectionCount(count: Int) -> Int {
-        if count > 6 {
-            return 6
+        let maxInSectionCount = 6
+        if count > maxInSectionCount {
+            return maxInSectionCount
         } else {
             return count
         }
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return 4
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IngredientCollectionViewCell", for: indexPath) as! IngredientCollectionViewCell
-        guard let ingredient = ingredient(from: indexPath) else {
-            return cell
-        }
+
+        let ingredient = ingredients(from: indexPath.section, month: selectedMonth)[indexPath.row]
 
         let imageURL = URL(string: ingredient.imageURLString)
         cell.imageView.sd_setImage(with: imageURL, completed: nil)
         cell.label.text = ingredient.name
         return cell
-    }
-
-    private func ingredient(from indexPath: IndexPath) -> Ingredient? {
-        guard let ingredientSection = IngredientSection(rawValue: indexPath.section) else {
-            return nil
-        }
-
-        switch ingredientSection {
-        case .seafood:
-            return seafoods[indexPath.row]
-        case .vegitable:
-            return vegitables[indexPath.row]
-        case .fruit:
-            return fruits[indexPath.row]
-        case .others:
-            return otherIngredients[indexPath.row]
-        }
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -155,3 +159,22 @@ extension IngredientsViewController: UICollectionViewDelegate, UICollectionViewD
     }
 }
 
+extension IngredientsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return (1...12).count
+    }
+
+    func pickerView( _ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return String(row + 1)
+    }
+
+    func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedMonth = row + 1
+        monthTextField.text = String(row + 1)
+        ingredientsCollectionView.reloadData()
+    }
+}

@@ -40,16 +40,21 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xwB-0v-riL">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="84"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJz-z7-cHj">
-                                                <rect key="frame" x="164.5" y="27" width="46" height="30"/>
-                                                <state key="normal" title="Button"/>
-                                            </button>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kDp-Tg-eus">
+                                                <rect key="frame" x="112" y="27" width="151" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="151" id="Jdy-aU-N7O"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="84" id="ALJ-fX-AMw"/>
-                                            <constraint firstItem="tJz-z7-cHj" firstAttribute="centerY" secondItem="xwB-0v-riL" secondAttribute="centerY" id="cY3-KP-H0N"/>
-                                            <constraint firstItem="tJz-z7-cHj" firstAttribute="centerX" secondItem="xwB-0v-riL" secondAttribute="centerX" id="oJT-oy-Rij"/>
+                                            <constraint firstItem="kDp-Tg-eus" firstAttribute="centerY" secondItem="xwB-0v-riL" secondAttribute="centerY" id="k9c-CF-KSA"/>
+                                            <constraint firstItem="kDp-Tg-eus" firstAttribute="centerX" secondItem="xwB-0v-riL" secondAttribute="centerX" id="o23-JD-f9i"/>
                                         </constraints>
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1zM-zf-ndR">
@@ -103,7 +108,7 @@
                     <navigationItem key="navigationItem" id="PCi-fh-oWn"/>
                     <connections>
                         <outlet property="ingredientsCollectionView" destination="1zM-zf-ndR" id="wXC-fT-Eut"/>
-                        <outlet property="seasonSelectionButton" destination="cY3-KP-H0N" id="kAd-bN-9rh"/>
+                        <outlet property="monthTextField" destination="kDp-Tg-eus" id="O2Q-FQ-XdB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

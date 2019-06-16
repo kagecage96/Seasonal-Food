@@ -9,10 +9,11 @@ class Ingredient {
         case fruit = "fruit"
         case other = "other"
     }
-
+    
     var name: String
     var imageURLString: String
     var category: Category
+    var seasons: [Bool]
 
     init?(document: DocumentSnapshot) {
         guard let data = document.data() else {
@@ -31,8 +32,17 @@ class Ingredient {
             return nil
         }
 
+        guard let seasons = data["seasons"] as? [Bool] else {
+            return nil
+        }
+
         self.name = name
         self.imageURLString = imageURLString
         self.category = category
+        self.seasons = seasons
+    }
+
+    func isSeason(month: Int) -> Bool {
+        return seasons[month-1]
     }
 }
