@@ -62,13 +62,13 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1U7-h2-h4n">
                                             <size key="itemSize" width="50" height="50"/>
-                                            <size key="headerReferenceSize" width="50" height="50"/>
+                                            <size key="headerReferenceSize" width="50" height="70"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="w66-Kt-7VA">
-                                                <rect key="frame" x="0.0" y="50" width="50" height="50"/>
+                                                <rect key="frame" x="0.0" y="70" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -77,17 +77,21 @@
                                             </collectionViewCell>
                                         </cells>
                                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="CollectionViewSectionHeader" id="qPL-e8-a4B" customClass="CollectionViewSectionHeader" customModule="Shun" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qg-Rh-bHV">
-                                                    <rect key="frame" x="8" y="15" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qg-Rh-bHV">
+                                                    <rect key="frame" x="8" y="28" width="359" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="5Qg-Rh-bHV" firstAttribute="top" secondItem="qPL-e8-a4B" secondAttribute="topMargin" id="Ca3-pr-YN2"/>
+                                                <constraint firstItem="5Qg-Rh-bHV" firstAttribute="leading" secondItem="qPL-e8-a4B" secondAttribute="leadingMargin" id="Rzy-ln-Glc"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="5Qg-Rh-bHV" secondAttribute="trailing" id="yB1-vq-xpn"/>
+                                            </constraints>
                                             <connections>
                                                 <outlet property="label" destination="5Qg-Rh-bHV" id="Vur-3p-Tpw"/>
                                             </connections>

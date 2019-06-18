@@ -1,8 +1,4 @@
-require 'open-uri'
-require 'nokogiri'
-require "csv"
-
-class ShunScraper
+class VegitableScraper < ScraperBase
   VEGITABLE_URLS = [
     'https://foodslink.jp/syokuzaihyakka/syun/monthly/janvier-ve.htm',
     'https://foodslink.jp/syokuzaihyakka/syun/monthly/fevrier-ve.htm',
@@ -18,26 +14,6 @@ class ShunScraper
     'https://foodslink.jp/syokuzaihyakka/syun/monthly/decembre-ve.htm'
   ]
 
-  # SEAFOOD_URLS = [
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/janvier-fi.htm',
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/fevrier-fi.htm',
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/mars-fi.htm',
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/avril-fi.htm',
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/mai-fi.htm',
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/juin-fi.htm',
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/juillet-fi.htm',
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/aout-fi.htm',
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/septembre-fi.htm',
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/octobre-fi.htm',
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/novembre-fi.htm',
-  #   'https://foodslink.jp/syokuzaihyakka/syun/monthly/decembre-fi.htm'
-  # ]
-
-  VEGITABLE_IMAGE_URL_BASE = "https://img01.plus-server.net/www.foodslink.jp/syokuzaihyakka/syun"
-  VEGITABLE_DETAIL_URL_BASE = "https://foodslink.jp/syokuzaihyakka/syun"
-
-  HEADER = ['category', 'name', 'image_url', 'page_url', 'articles_json', 'shun_array']
-
   def run
     start_index = ENV['START_INDEX'].present? ? ENV['START_INDEX'].to_i : 0
     begin
@@ -51,7 +27,7 @@ class ShunScraper
     end
 
     # vegitables に値をセットする（不自然なインターフェースだけど後で直す）
-    fetch_detail_data!(vegitables, start_index)
+    fetch_vegitable_detail_data!(vegitables, start_index)
     CSV.open('vegitable.csv', 'w') do |csv|
       csv << HEADER
       vegitables.each do |vegitable|
@@ -60,7 +36,7 @@ class ShunScraper
     end
   end
 
-  def fetch_detail_data!(vegitables, start_index)
+  def fetch_vegitable_detail_data!(vegitables, start_index)
     vegitables[start_index..-1].each.with_index(start_index+1) do |vegitable, i|
       begin
         puts("#{i}番目")
@@ -69,20 +45,9 @@ class ShunScraper
         puts(e)
         puts("fetch detail try agrain")
         sleep(2)
-        fetch_detail_data!(vegitables, i)
+        fetch_vegitable_detail_data!(vegitables, i)
       end
     end
-  end
-
-  def fetch_nokogiri_doc(url)
-    charset = nil
-    opt = {}
-    opt['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/531.37 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.37 Edge/12.<OS build number>'
-    html = open(url, opt) do |f|
-      charset = f.charset
-      f.read
-    end
-    doc = Nokogiri::HTML.parse(html, nil, charset)
   end
 
   def fetch_and_set_vegitable_detail!(vegitable)
@@ -117,7 +82,7 @@ class ShunScraper
       elsif element.attributes['class'].present? && element.name == 'p' && element.attributes['class'].value = 'doc'
         target_article = vegitable.articles.find { |article| article.title == current_h2 }
         break if target_article.blank?
-        target_sub_category = target_article.sub_categories.find { |sub_category| sub_category.title = current_h3 }
+        target_sub_category = target_article.sub_categories.find { |sub_category| sub_category.title == current_h3 }
         target_sub_category.contents << element.text if target_sub_category.present?
       end
     end
@@ -131,8 +96,8 @@ class ShunScraper
         vegitable = Ingredient.new
         begin
           vegitable.name = element.search('a').text
-          vegitable.image_url = VEGITABLE_IMAGE_URL_BASE + element.search('img').first.attributes["src"].value.remove('..')
-          vegitable.page_url = VEGITABLE_DETAIL_URL_BASE + element.search('a').first.attributes['href'].value.remove('..')
+          vegitable.image_url = IMAGE_URL_BASE + element.search('img').first.attributes["src"].value.remove('..')
+          vegitable.page_url = DETAIL_URL_BASE + element.search('a').first.attributes['href'].value.remove('..')
           vegitables << vegitable
         rescue => e
           print(e)
