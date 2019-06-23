@@ -44,7 +44,7 @@ class SeafoodScraper < ScraperBase
         puts(e)
         puts("fetch detail try agrain")
         sleep(2)
-        fetch_seafood_detail_data!(seafoods, i)
+        fetch_and_set_seafoods_detail!(seafood)
       end
     end
   end

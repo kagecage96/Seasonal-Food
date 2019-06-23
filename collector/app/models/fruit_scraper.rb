@@ -49,7 +49,7 @@ class FruitScraper < ScraperBase
             fruit = Ingredient.new
             fruit.name = name
             fruit.image_url = IMAGE_URL_BASE + element.search('img').first.attributes["src"].value.remove('..')
-            fruit.page_url = DETAIL_URL_BASE + element.search('a').first.attributes['href'].value.remove('..')
+            fruit.page_url = DETAIL_URL_BASE + element.search('a').first.attributes['href'].value.remove('..').remove("#CaMikan")
             fruit.shun_array[i]
             fruits << fruit
           end
@@ -70,7 +70,7 @@ class FruitScraper < ScraperBase
         puts(e)
         puts("fetch detail try agrain")
         sleep(2)
-        fetch_fruit_detail_data!(fruits, i)
+        fetch_and_set_fruits_detail!(fruit)
       end
     end
   end

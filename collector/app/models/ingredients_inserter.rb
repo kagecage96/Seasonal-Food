@@ -21,8 +21,8 @@ class IngredientsInserter
       articles_jsons.each do |json|
         article_ref = firestore.col("Articles").add({ title: json["title"], ingredient_id: ingredient_ref.document_id })
         articles_ids << article_ref.document_id
-        json["sub_categories"].each do |category_json|
-          article_ref.col("sub_categories").add(title: category_json["title"], contents: category_json["contents"])
+        json["sub_categories"].each_with_index do |category_json, i|
+          article_ref.col("sub_categories").add(title: category_json["title"], contents: category_json["contents"], index: index)
         end
       end
       ingredient_ref.update({articles_ids: articles_ids})
