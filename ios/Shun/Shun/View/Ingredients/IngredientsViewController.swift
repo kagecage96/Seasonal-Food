@@ -44,6 +44,7 @@ class IngredientsViewController: UIViewController {
         ingredientsCollectionView.delegate = self
         ingredientsCollectionView.dataSource = self
         ingredientsCollectionView.register(UINib(nibName: "IngredientCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "IngredientCollectionViewCell")
+        
         ingredientsListener = db.collection("Ingredients").addSnapshotListener({ (snapshot, error) in
             if let error = error {
                 //TODO: Error handling
@@ -176,5 +177,12 @@ extension IngredientsViewController: UIPickerViewDataSource, UIPickerViewDelegat
         selectedMonth = row + 1
         monthTextField.text = String(row + 1)
         ingredientsCollectionView.reloadData()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let ingredient = ingredients(from: indexPath.section, month: selectedMonth)[indexPath.row]
+
+        let viewController = IngredientViewController.storyboardInstance(ingredient: ingredient)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

@@ -14,6 +14,7 @@ class Ingredient {
     var imageURLString: String
     var category: Category
     var seasons: [Bool]
+    var documentID: String
 
     init?(document: DocumentSnapshot) {
         guard let data = document.data() else {
@@ -40,6 +41,7 @@ class Ingredient {
         self.imageURLString = imageURLString
         self.category = category
         self.seasons = seasons
+        self.documentID = document.documentID
     }
 
     func isSeason(month: Int) -> Bool {
