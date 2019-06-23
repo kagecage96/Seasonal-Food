@@ -6,6 +6,8 @@ class IngredientViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var recipeButton: UIButton!
+    @IBOutlet weak var restaurantButton: UIButton!
 
     @IBOutlet weak var tableViewConstraint: NSLayoutConstraint!
 
@@ -83,6 +85,32 @@ class IngredientViewController: UIViewController {
         }
         
         articles.append(article)
+    }
+
+    @IBAction func recipeButtonDidTapped(_ sender: Any) {
+        guard let name = ingredient?.name else {
+            return
+        }
+        let urlString = "https://www.google.co.jp/search?q=\(name) レシピ"
+        let encodeUrlString: String = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let url = URL(string: encodeUrlString)!
+
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
+
+    @IBAction func restaurantButtonDidTapped(_ sender: Any) {
+        guard let name = ingredient?.name else {
+            return
+        }
+        let urlString = "https://www.google.co.jp/search?q=\(name) レストラン"
+        let encodeUrlString: String = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let url = URL(string: encodeUrlString)!
+
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
     }
 }
 
