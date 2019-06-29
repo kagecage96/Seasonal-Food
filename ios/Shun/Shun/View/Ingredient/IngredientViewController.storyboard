@@ -18,10 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xIh-xp-58o">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xIh-xp-58o">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="C9g-qW-0jY">
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="C9g-qW-0jY">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1043.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j7L-wn-wOF">
@@ -61,15 +61,12 @@
                                                     <constraint firstAttribute="bottom" secondItem="mVg-7S-A17" secondAttribute="bottom" constant="12" id="qTc-4A-Xfm"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7NC-rf-y2z">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7NC-rf-y2z">
                                                 <rect key="frame" x="0.0" y="343.5" width="375" height="700"/>
                                                 <subviews>
-                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1px-Zr-9GG">
+                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1px-Zr-9GG">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="700"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="700" id="Ar9-lW-H4U"/>
-                                                        </constraints>
                                                     </tableView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -91,6 +88,13 @@
                                     <constraint firstAttribute="trailing" secondItem="C9g-qW-0jY" secondAttribute="trailing" id="pHt-fv-d6y"/>
                                 </constraints>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Kd-Lx-ZRc">
+                                <rect key="frame" x="0.0" y="593" width="375" height="1"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="qQ4-bQ-KTm"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JwE-sy-PcV">
                                 <rect key="frame" x="0.0" y="594" width="375" height="73"/>
                                 <subviews>
@@ -152,11 +156,14 @@
                         <constraints>
                             <constraint firstItem="xIh-xp-58o" firstAttribute="centerX" secondItem="BGq-GI-HcP" secondAttribute="centerX" id="AsC-Qe-IAs"/>
                             <constraint firstItem="xIh-xp-58o" firstAttribute="trailing" secondItem="mRX-N9-qjX" secondAttribute="trailing" id="C65-aR-5Tk"/>
+                            <constraint firstItem="mRX-N9-qjX" firstAttribute="trailing" secondItem="1Kd-Lx-ZRc" secondAttribute="trailing" id="Gz9-KG-jUJ"/>
                             <constraint firstItem="mRX-N9-qjX" firstAttribute="bottom" secondItem="JwE-sy-PcV" secondAttribute="bottom" id="MOM-I0-zcw"/>
                             <constraint firstItem="mRX-N9-qjX" firstAttribute="trailing" secondItem="JwE-sy-PcV" secondAttribute="trailing" id="Mfg-Fc-wXW"/>
                             <constraint firstItem="xIh-xp-58o" firstAttribute="bottom" secondItem="mRX-N9-qjX" secondAttribute="bottom" id="SyQ-Yt-ZjP"/>
+                            <constraint firstItem="JwE-sy-PcV" firstAttribute="top" secondItem="1Kd-Lx-ZRc" secondAttribute="bottom" id="VTg-Fq-yqS"/>
                             <constraint firstItem="JwE-sy-PcV" firstAttribute="leading" secondItem="mRX-N9-qjX" secondAttribute="leading" id="dQG-6W-z5F"/>
                             <constraint firstItem="xIh-xp-58o" firstAttribute="top" secondItem="BGq-GI-HcP" secondAttribute="top" id="geH-jH-eC8"/>
+                            <constraint firstItem="1Kd-Lx-ZRc" firstAttribute="leading" secondItem="mRX-N9-qjX" secondAttribute="leading" id="vas-fj-GdR"/>
                             <constraint firstItem="xIh-xp-58o" firstAttribute="leading" secondItem="mRX-N9-qjX" secondAttribute="leading" id="xbL-s2-Vfn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mRX-N9-qjX"/>
@@ -167,7 +174,6 @@
                         <outlet property="recipeButton" destination="gdf-KS-ChU" id="4j2-5x-QTt"/>
                         <outlet property="restaurantButton" destination="Vbv-pX-0fK" id="8lY-hs-fPL"/>
                         <outlet property="tableView" destination="1px-Zr-9GG" id="u8s-m3-xDp"/>
-                        <outlet property="tableViewConstraint" destination="Ar9-lW-H4U" id="sJr-S3-0ni"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TuJ-gz-I8V" userLabel="First Responder" sceneMemberID="firstResponder"/>

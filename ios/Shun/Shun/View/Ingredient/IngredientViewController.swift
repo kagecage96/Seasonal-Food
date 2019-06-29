@@ -10,7 +10,6 @@ class IngredientViewController: UIViewController {
     @IBOutlet weak var restaurantButton: UIButton!
 
     @IBOutlet weak var tableViewConstraint: NSLayoutConstraint!
-
     var ingredient: Ingredient?
 
     private var articles: [Article] = []
@@ -25,6 +24,17 @@ class IngredientViewController: UIViewController {
         return viewController
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.setBackgroundImage(nil  , for: .default)
+        navigationController?.navigationBar.shadowImage = nil
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,11 +43,27 @@ class IngredientViewController: UIViewController {
             return
         }
 
+        [recipeButton, restaurantButton].forEach { (button: UIButton) in
+            button.backgroundColor = .shun_green
+            button.layer.cornerRadius = 20.0
+            button.setTitleColor(.white, for: .normal)
+            button.setImage(#imageLiteral(resourceName: "search_icon"), for: .normal)
+            button.tintColor = .white
+            button.imageEdgeInsets = UIEdgeInsets(top: 0.0, left: -10.0, bottom: 0.0, right: 0.0)
+        }
+
+        recipeButton.setTitle("Recipes", for: .normal)
+        restaurantButton.setTitle("Restaurants", for: .normal)
+
         imageView.sd_setImage(with: URL(string: ingredient.imageURLString), completed: nil)
+
         nameLabel.text = ingredient.name
+        nameLabel.font = .shun_bold(size: 26)
+        nameLabel.textColor = .shun_black
 
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.allowsSelection = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "ArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "ArticleTableViewCell")
         let tableFooterView = UIView(frame: CGRect.zero)
@@ -131,7 +157,6 @@ extension IngredientViewController: UITableViewDataSource, UITableViewDelegate {
         cell.titleLabel.text = article.title
         cell.delegate = self
 
-        //TODO: Devide method
         var content = ""
         article.subArticles.forEach { (subArticle) in
             content += String(format: "%@\n", subArticle.title)
@@ -146,13 +171,17 @@ extension IngredientViewController: UITableViewDataSource, UITableViewDelegate {
 
         return cell
     }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+        tableView.estimatedRowHeight = 100
+        return UITableView.automaticDimension
+    }
 }
 
 extension IngredientViewController: ArticleTableViewCellDelegate {
-    func readMoreButtonDidTapped() {
-        //TODO: Fix tableView height
+    func readMoreButtonDidTapped(height: CGFloat) {
         tableViewConstraint.constant = 4000
         tableView.needsUpdateConstraints()
-        tableView.reloadData()
     }
 }

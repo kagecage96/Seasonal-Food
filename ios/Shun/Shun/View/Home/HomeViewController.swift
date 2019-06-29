@@ -190,12 +190,12 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 
     func pickerView( _ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return String(row + 1)
+        return DateFormatter().monthSymbols[row]
     }
 
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedMonthNumber = row + 1
-        monthTextField.text = String(row + 1)
+        monthTextField.text = DateFormatter().monthSymbols[row]
         ingredientsCollectionView.reloadData()
     }
 
