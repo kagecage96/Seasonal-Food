@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="ArticleImageTableViewCell" selectionStyle="default" indentationWidth="10" rowHeight="359" id="KGk-i7-Jjw" customClass="ArticleImageTableViewCell" customModule="Shun" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="359"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="358.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView autoresizesSubviews="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vfv-Ko-gmX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="280"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="280" id="dAQ-l5-OdH"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eCQ-FO-x4d">
+                        <rect key="frame" x="16" y="294" width="288" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="jka-q0-VIh"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="vfv-Ko-gmX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="8mP-5I-1Dd"/>
+                    <constraint firstItem="vfv-Ko-gmX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="E6Q-fe-9ZM"/>
+                    <constraint firstAttribute="trailing" secondItem="vfv-Ko-gmX" secondAttribute="trailing" id="Fh4-8T-LOP"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="eCQ-FO-x4d" secondAttribute="bottom" id="Vud-Z4-cQc"/>
+                    <constraint firstItem="eCQ-FO-x4d" firstAttribute="top" secondItem="vfv-Ko-gmX" secondAttribute="bottom" constant="14" id="lUi-D6-eDC"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="eCQ-FO-x4d" secondAttribute="trailing" id="owm-Dx-VIO"/>
+                    <constraint firstItem="eCQ-FO-x4d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="tMk-zP-fNO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="ingredientImageView" destination="vfv-Ko-gmX" id="vdX-F2-gyj"/>
+                <outlet property="nameLabel" destination="eCQ-FO-x4d" id="c1w-RD-xNi"/>
+            </connections>
+            <point key="canvasLocation" x="137.59999999999999" y="295.50224887556226"/>
+        </tableViewCell>
+    </objects>
+</document>

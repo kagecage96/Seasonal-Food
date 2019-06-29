@@ -3,13 +3,10 @@ import Firebase
 import SDWebImage
 
 class IngredientViewController: UIViewController {
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var recipeButton: UIButton!
     @IBOutlet weak var restaurantButton: UIButton!
 
-    @IBOutlet weak var tableViewConstraint: NSLayoutConstraint!
     var ingredient: Ingredient?
 
     private var articles: [Article] = []
@@ -55,17 +52,13 @@ class IngredientViewController: UIViewController {
         recipeButton.setTitle("Recipes", for: .normal)
         restaurantButton.setTitle("Restaurants", for: .normal)
 
-        imageView.sd_setImage(with: URL(string: ingredient.imageURLString), completed: nil)
-
-        nameLabel.text = ingredient.name
-        nameLabel.font = .shun_bold(size: 26)
-        nameLabel.textColor = .shun_black
-
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsSelection = false
-        tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "ArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "ArticleTableViewCell")
+        tableView.register(ArticleImageTableViewCell.nib(), forCellReuseIdentifier: ArticleImageTableViewCell.identifier)
+        
+
         let tableFooterView = UIView(frame: CGRect.zero)
         tableView.tableFooterView = tableFooterView
 
@@ -142,46 +135,56 @@ class IngredientViewController: UIViewController {
 
 extension IngredientViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return articles.count
+        switch section {
+        case 0:
+            return 1
+        default:
+            return articles.count
+        }
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let article = articles[indexPath.section]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleTableViewCell") as! ArticleTableViewCell
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ArticleImageTableViewCell.identifier) as! ArticleImageTableViewCell
+            guard let ingredient = ingredient else { return cell }
+            let url = URL(string: ingredient.imageURLString)
+            cell.ingredientImageView?.sd_setImage(with: url, completed: nil)
+            cell.nameLabel.text = ingredient.name
+            return cell
+        default:
+            let article = articles[indexPath.section]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleTableViewCell") as! ArticleTableViewCell
 
-        cell.titleLabel.text = article.title
-        cell.delegate = self
+            cell.titleLabel.text = article.title
+            cell.delegate = self
 
-        var content = ""
-        article.subArticles.forEach { (subArticle) in
-            content += String(format: "%@\n", subArticle.title)
-            content += "\n"
-            subArticle.contents.forEach({ (str) in
-                content += String(format: " %@\n", str)
+            //TODO: Devide method
+            var content = ""
+            article.subArticles.forEach { (subArticle) in
+                content += String(format: "%@\n", subArticle.title)
                 content += "\n"
-            })
+                subArticle.contents.forEach({ (str) in
+                    content += String(format: " %@\n", str)
+                    content += "\n"
+                })
+            }
+
+            cell.contentLabel.text = content
+
+            return cell
         }
-
-        cell.contentLabel.text = content
-
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        tableView.estimatedRowHeight = 100
-        return UITableView.automaticDimension
     }
 }
 
 extension IngredientViewController: ArticleTableViewCellDelegate {
-    func readMoreButtonDidTapped(height: CGFloat) {
-        tableViewConstraint.constant = 4000
-        tableView.needsUpdateConstraints()
+    func readMoreButtonDidTapped(newCellHeight: CGFloat) {
+        tableView.updateConstraints()
+        tableView.reloadData()
     }
 }

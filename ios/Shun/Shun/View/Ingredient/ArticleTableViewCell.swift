@@ -1,11 +1,12 @@
 import UIKit
 
 protocol ArticleTableViewCellDelegate {
-    func readMoreButtonDidTapped(height: CGFloat)
+    func readMoreButtonDidTapped(newCellHeight: CGFloat)
 }
 
 class ArticleTableViewCell: UITableViewCell {
 
+    var isExpanded: Bool = false
     var delegate: ArticleTableViewCellDelegate?
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -23,6 +24,7 @@ class ArticleTableViewCell: UITableViewCell {
 
         readMoreButton.setTitleColor(.shun_green, for: .normal)
         readMoreButton.titleLabel?.font = .shun_normal(size: 14)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -30,8 +32,9 @@ class ArticleTableViewCell: UITableViewCell {
     }
 
     @IBAction func readMoreButtonDidTapped(_ sender: Any) {
+        isExpanded = true
         readMoreButton.isHidden = true
         contentLabel.numberOfLines = 0
-        delegate?.readMoreButtonDidTapped(height: frame.size.height)
+        delegate?.readMoreButtonDidTapped(newCellHeight: frame.height)
     }
 }
