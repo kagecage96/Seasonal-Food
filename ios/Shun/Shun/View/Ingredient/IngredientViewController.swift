@@ -158,7 +158,7 @@ extension IngredientViewController: UITableViewDataSource, UITableViewDelegate {
             cell.nameLabel.text = ingredient.name
             return cell
         default:
-            let article = articles[indexPath.section]
+            let article = articles[indexPath.section-1]
             let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleTableViewCell") as! ArticleTableViewCell
 
             cell.titleLabel.text = article.title
