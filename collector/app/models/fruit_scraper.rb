@@ -26,7 +26,7 @@ class FruitScraper < ScraperBase
       puts("fetch urls try again")
       fruits = fetch_fruits
     end
-    fetch_fruit_detail_data!(fruits, 0)
+    fetch_fruit_detail_data!(fruits, start_index)
     CSV.open('fruits.csv', 'w') do |csv|
       csv << HEADER
       fruits.each do |fruit|
@@ -82,22 +82,24 @@ class FruitScraper < ScraperBase
     doc = fetch_nokogiri_doc(fruit.page_url)
     current_h2 = nil
     current_h3 = nil
-
-    doc.search('article').first.search('div').first.children.each do |element|
-      # h2, h3 が階層構造になっていないので、探索して処理する
-      # 次の h2 が現れるまで current_h2 として保持しておき、それで h3 にタグ付けする
-      if valid_h2?(element)
-        current_h2 = element.text
-        fruit.articles << Ingredient::Article.new(current_h2)
-      elsif valid_h3(element)
-        current_h3 = element.text
-        target_article = fruit.articles.find { |article| article.title == current_h2 }
-        target_article.sub_categories << Ingredient::SubCategory.new(element.text) if target_article.present?
-      elsif valid_h4(element)
-        target_article = fruit.articles.find { |article| article.title == current_h2 }
-        break if target_article.blank?
-        target_sub_category = target_article.sub_categories.find { |sub_category| sub_category.title == current_h3 }
-        target_sub_category.contents << element.text if target_sub_category.present?
+    return if doc.search('article').first.nil?
+    doc.search('article').first.search('div').each do |div|
+      div.children.each do |element|
+        # h2, h3 が階層構造になっていないので、探索して処理する
+        # 次の h2 が現れるまで current_h2 として保持しておき、それで h3 にタグ付けする
+        if valid_h2?(element)
+          current_h2 = element.text
+          fruit.articles << Ingredient::Article.new(current_h2)
+        elsif valid_h3(element)
+          current_h3 = element.text
+          target_article = fruit.articles.find { |article| article.title == current_h2 }
+          target_article.sub_categories << Ingredient::SubCategory.new(element.text) if target_article.present?
+        elsif valid_h4(element)
+          target_article = fruit.articles.find { |article| article.title == current_h2 }
+          break if target_article.blank?
+          target_sub_category = target_article.sub_categories.find { |sub_category| sub_category.title == current_h3 }
+          target_sub_category.contents << element.text if target_sub_category.present?
+        end
       end
     end
   end
@@ -113,14 +115,14 @@ class FruitScraper < ScraperBase
 
   def valid_h3(element)
     return false if element.attributes['class'].blank?
-    return false if !element.attributes['class'].value.include?("midashi")
+    return false if !element.attributes['class'].value.include?("midashi") && !element.attributes['class'].value.include?("midashired")
     return false if element.name != 'h3'
     return true
   end
 
   def valid_h4(element)
     return false if element.attributes['class'].blank?
-    return false if !element.attributes['class'].value.include?("doc-f")
+    return false if !element.attributes['class'].value.include?("doc")
     return true
   end
 end
