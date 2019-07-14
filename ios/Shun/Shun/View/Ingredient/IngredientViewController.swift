@@ -184,7 +184,9 @@ extension IngredientViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension IngredientViewController: ArticleTableViewCellDelegate {
     func readMoreButtonDidTapped(newCellHeight: CGFloat) {
+        tableView.beginUpdates()
         tableView.updateConstraints()
         tableView.reloadData()
+        tableView.endUpdates()
     }
 }
