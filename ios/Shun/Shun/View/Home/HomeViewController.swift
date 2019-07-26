@@ -25,9 +25,11 @@ class HomeViewController: UIViewController {
 
         let backButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButtonItem
-
         navigationItem.title = "Seasonal Food"
 
+        let date = Date()
+        let calendar = Calendar.current
+        selectedMonthNumber = calendar.component(.month, from: date)
         prepareTextField()
 
         ingredientsCollectionView.delegate = self
@@ -62,9 +64,9 @@ class HomeViewController: UIViewController {
         monthTextField.backgroundColor = .shun_extra_light_gray
         monthTextField.layer.borderColor = UIColor.shun_extra_light_gray.cgColor
         monthTextField.layer.cornerRadius = 20
-        monthTextField.text = "January"
         monthTextField.font = .shun_normal(size: 16)
         monthTextField.textColor = .shun_black
+        monthTextField.text = DateFormatter().monthSymbols[selectedMonthNumber-1]
 
         let toolBar = UIToolbar()
         toolBar.barStyle = .default
