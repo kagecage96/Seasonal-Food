@@ -5,7 +5,7 @@ import SDWebImage
 class HomeViewController: UIViewController {
     internal enum IngredientSection: Int {
         case seafood = 0
-        case vegitable = 1
+        case vegetable = 1
         case fruit = 2
         case others = 3
     }
@@ -15,7 +15,7 @@ class HomeViewController: UIViewController {
 
     private var ingredients: [Ingredient] = []
     private var ingredientsListener: ListenerRegistration?
-    private let headerTitles = ["Seafood", "Vegitable", "Fruit", "Others"]
+    private let headerTitles = ["Seafood", "Vegetable", "Fruit", "Others"]
     private let db = Firestore.firestore()
 
     var selectedMonthNumber: Int = 1
@@ -117,8 +117,8 @@ class HomeViewController: UIViewController {
         switch ingredientSection {
         case .seafood:
             return ingredients(from: .seafood, month: selectedMonthNumber)
-        case .vegitable:
-            return ingredients(from: .vegitable, month: selectedMonthNumber)
+        case .vegetable:
+            return ingredients(from: .vegetable, month: selectedMonthNumber)
         case .fruit:
             return ingredients(from: .fruit, month: selectedMonthNumber)
         case .others:
@@ -222,9 +222,9 @@ extension HomeViewController: CollectionViewSectionHeaderDelegate {
             let seafoods = ingredients(from: .seafood, month: selectedMonthNumber)
             let viewController = IngredientsViewController.storyboardInstance(ingredients: seafoods, ingredientTypeString: "Seafood", month: month)
             navigationController?.pushViewController(viewController, animated: true)
-        case .vegitable:
-            let vegitables = ingredients(from: .vegitable, month: selectedMonthNumber)
-            let viewController = IngredientsViewController.storyboardInstance(ingredients: vegitables, ingredientTypeString: "Vegitable", month: month)
+        case .vegetable:
+            let vegetables = ingredients(from: .vegetable, month: selectedMonthNumber)
+            let viewController = IngredientsViewController.storyboardInstance(ingredients: vegetables, ingredientTypeString: "vegetable", month: month)
             navigationController?.pushViewController(viewController, animated: true)
         case .fruit:
             let fruits = ingredients(from: .fruit, month: selectedMonthNumber)

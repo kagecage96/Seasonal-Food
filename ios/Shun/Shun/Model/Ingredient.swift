@@ -5,7 +5,7 @@ class Ingredient {
 
     enum Category: String {
         case seafood = "seafood"
-        case vegitable = "vegitable"
+        case vegetable = "vegetable"
         case fruit = "fruit"
         case other = "other"
     }
