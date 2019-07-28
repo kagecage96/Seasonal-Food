@@ -164,19 +164,8 @@ extension IngredientViewController: UITableViewDataSource, UITableViewDelegate {
 
             cell.titleLabel.text = article.title
             cell.delegate = self
-
-            //TODO: Devide method
-            var content = ""
-            article.subArticles.forEach { (subArticle) in
-                content += String(format: "%@\n", subArticle.title)
-                content += "\n"
-                subArticle.contents.forEach({ (str) in
-                    content += String(format: " %@\n", str)
-                    content += "\n"
-                })
-            }
-
-            cell.contentLabel.text = content
+            cell.indexPath = indexPath
+            cell.contentLabel.text = article.subArticleText()
 
             return cell
         }
@@ -184,10 +173,9 @@ extension IngredientViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension IngredientViewController: ArticleTableViewCellDelegate {
-    func readMoreButtonDidTapped(newCellHeight: CGFloat) {
-        tableView.beginUpdates()
-        tableView.updateConstraints()
-        tableView.reloadData()
-        tableView.endUpdates()
+    func readMoreButtonDidTapped(indexPath: IndexPath) {
+        let article = articles[indexPath.row]
+        let viewController = ArticleViewController.storyboardInstance(article: article)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

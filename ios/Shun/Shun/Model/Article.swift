@@ -16,4 +16,17 @@ class Article {
 
         self.title = title
     }
+
+    func subArticleText() -> String {
+        var content = ""
+        subArticles.forEach { (subArticle) in
+            content += String(format: "%@\n", subArticle.title)
+            content += "\n"
+            subArticle.contents.forEach({ (str) in
+                content += String(format: " %@\n", str)
+                content += "\n"
+            })
+        }
+        return content
+    }
 }

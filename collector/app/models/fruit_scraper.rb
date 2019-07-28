@@ -42,7 +42,8 @@ class FruitScraper < ScraperBase
       doc.search('.monthlyimagebox-f').each do |element|
         begin
           name = element.search('a').text
-          fruit = fruits.find { |fruit| fruit.name == name }
+          page_url = DETAIL_URL_BASE + element.search('a').first.attributes['href'].value.remove('..').remove("#CaMikan")
+          fruit = fruits.find { |fruit| fruit.page_url == page_url }
           if fruit.present?
             fruit.shun_array[i] = true
           else
@@ -50,7 +51,7 @@ class FruitScraper < ScraperBase
             fruit.name = name
             fruit.image_url = IMAGE_URL_BASE + element.search('img').first.attributes["src"].value.remove('..')
             fruit.page_url = DETAIL_URL_BASE + element.search('a').first.attributes['href'].value.remove('..').remove("#CaMikan")
-            fruit.shun_array[i]
+            fruit.shun_array[i] = true
             fruits << fruit
           end
         rescue => e

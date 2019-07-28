@@ -1,13 +1,13 @@
 import UIKit
 
 protocol ArticleTableViewCellDelegate {
-    func readMoreButtonDidTapped(newCellHeight: CGFloat)
+    func readMoreButtonDidTapped(indexPath: IndexPath)
 }
 
 class ArticleTableViewCell: UITableViewCell {
 
-    var isExpanded: Bool = false
     var delegate: ArticleTableViewCellDelegate?
+    var indexPath: IndexPath?
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
@@ -32,9 +32,7 @@ class ArticleTableViewCell: UITableViewCell {
     }
 
     @IBAction func readMoreButtonDidTapped(_ sender: Any) {
-        isExpanded = true
-        readMoreButton.isHidden = true
-        contentLabel.numberOfLines = 0
-        delegate?.readMoreButtonDidTapped(newCellHeight: frame.height)
+        guard let indexPath = indexPath else { return }
+        delegate?.readMoreButtonDidTapped(indexPath: indexPath)
     }
 }

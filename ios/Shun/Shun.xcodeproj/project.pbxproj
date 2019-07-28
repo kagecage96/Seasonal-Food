@@ -27,6 +27,8 @@
 		9D564F3522B61FCF002A2E42 /* IngredientCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D564F3422B61FCF002A2E42 /* IngredientCollectionViewCell.swift */; };
 		9D564F3722B61FFD002A2E42 /* IngredientCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D564F3622B61FFD002A2E42 /* IngredientCollectionViewCell.xib */; };
 		9D564F3922B62957002A2E42 /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D564F3822B62957002A2E42 /* Ingredient.swift */; };
+		9D63BE2922EDDD270052A4E9 /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D63BE2822EDDD270052A4E9 /* ArticleViewController.swift */; };
+		9D63BE2B22EDDD340052A4E9 /* ArticleViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D63BE2A22EDDD340052A4E9 /* ArticleViewController.storyboard */; };
 		9D6EBCAC22C0DFC90016938F /* Shun+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6EBCAB22C0DFC90016938F /* Shun+UIColor.swift */; };
 		9D6EBCAE22C0E1220016938F /* Shun+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6EBCAD22C0E1220016938F /* Shun+UIFont.swift */; };
 		9D6EBCB022C0EC600016938F /* CollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D6EBCAF22C0EC600016938F /* CollectionViewSectionHeader.xib */; };
@@ -87,6 +89,8 @@
 		9D564F3422B61FCF002A2E42 /* IngredientCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCollectionViewCell.swift; sourceTree = "<group>"; };
 		9D564F3622B61FFD002A2E42 /* IngredientCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IngredientCollectionViewCell.xib; sourceTree = "<group>"; };
 		9D564F3822B62957002A2E42 /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
+		9D63BE2822EDDD270052A4E9 /* ArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
+		9D63BE2A22EDDD340052A4E9 /* ArticleViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ArticleViewController.storyboard; sourceTree = "<group>"; };
 		9D6EBCAB22C0DFC90016938F /* Shun+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shun+UIColor.swift"; sourceTree = "<group>"; };
 		9D6EBCAD22C0E1220016938F /* Shun+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shun+UIFont.swift"; sourceTree = "<group>"; };
 		9D6EBCAF22C0EC600016938F /* CollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewSectionHeader.xib; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 		9D4545E322BA413F007D1DD0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9D63BE2722EDDCF70052A4E9 /* Article */,
 				9D6EBCB122C3A0880016938F /* Ingredients */,
 				9D4545EE22BF8346007D1DD0 /* Ingredient */,
 				9D4545ED22BF8329007D1DD0 /* Home */,
@@ -239,6 +244,15 @@
 				9D564F2622B6171B002A2E42 /* Info.plist */,
 			);
 			path = ShunUITests;
+			sourceTree = "<group>";
+		};
+		9D63BE2722EDDCF70052A4E9 /* Article */ = {
+			isa = PBXGroup;
+			children = (
+				9D63BE2822EDDD270052A4E9 /* ArticleViewController.swift */,
+				9D63BE2A22EDDD340052A4E9 /* ArticleViewController.storyboard */,
+			);
+			path = Article;
 			sourceTree = "<group>";
 		};
 		9D6EBCB122C3A0880016938F /* Ingredients */ = {
@@ -373,6 +387,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D63BE2B22EDDD340052A4E9 /* ArticleViewController.storyboard in Resources */,
 				9D6EBCC122C7D6B10016938F /* ArticleImageTableViewCell.xib in Resources */,
 				9D4545E222BA2289007D1DD0 /* IngredientViewController.storyboard in Resources */,
 				9D564F0F22B6171B002A2E42 /* LaunchScreen.storyboard in Resources */,
@@ -504,6 +519,7 @@
 				9D564F0722B61719002A2E42 /* HomeViewController.swift in Sources */,
 				9D6EBCAE22C0E1220016938F /* Shun+UIFont.swift in Sources */,
 				9D4545E022BA2279007D1DD0 /* IngredientViewController.swift in Sources */,
+				9D63BE2922EDDD270052A4E9 /* ArticleViewController.swift in Sources */,
 				9D6EBCC022C7D6B10016938F /* ArticleImageTableViewCell.swift in Sources */,
 				9D564F3522B61FCF002A2E42 /* IngredientCollectionViewCell.swift in Sources */,
 				9D564F3922B62957002A2E42 /* Ingredient.swift in Sources */,
