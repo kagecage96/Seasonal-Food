@@ -3,16 +3,20 @@ import Firebase
 import SDWebImage
 
 class HomeViewController: UIViewController {
-    internal enum IngredientSection: Int {
-        case seafood = 0
-        case vegetable = 1
-        case fruit = 2
-        case others = 3
+    struct IngredientSection {
+        let categoryID: String
+        let categoryJPName: String
+
+        init(categoryID: String, categoryJPName: String) {
+            self.categoryID = categoryID
+            self.categoryJPName = categoryJPName
+        }
     }
 
     @IBOutlet weak var monthTextField: UITextField!
     @IBOutlet weak var ingredientsCollectionView: UICollectionView!
 
+    private var ingredientSections: [IngredientSection] = []
     private var ingredients: [Ingredient] = []
     private var ingredientsListener: ListenerRegistration?
     private let headerTitles = ["Seafood", "Vegetable", "Fruit", "Others"]
@@ -41,7 +45,6 @@ class HomeViewController: UIViewController {
 
         ingredientsListener = db.collection("Ingredients").addSnapshotListener({ (snapshot, error) in
             if let error = error {
-                //TODO: Error handling
                 print(error)
             }
 
@@ -89,9 +92,7 @@ class HomeViewController: UIViewController {
         switch change.type {
         case .added:
             insertNewIngredient(document: change.document)
-        default:
-            //TODO
-            print("TODO")
+        default: break
         }
     }
 
@@ -100,36 +101,34 @@ class HomeViewController: UIViewController {
             return
         }
         ingredients.append(ingredient)
+        insertNewCategoryIfNeeded(ingredient)
+
         ingredientsCollectionView.reloadData()
     }
 
-    private func ingredients(from category: Ingredient.Category, month: Int) -> [Ingredient] {
-        return ingredients.filter({ (ingredient) -> Bool in
-            return ingredient.category == category && ingredient.isSeason(month: month)
-        })
+    private func insertNewCategoryIfNeeded(_ ingredient: Ingredient) {
+        let shouldAddNewSection = !ingredientSections.contains { (section) -> Bool in
+            section.categoryID == ingredient.subCategory
+        }
+
+        if shouldAddNewSection {
+            let section = IngredientSection(categoryID: ingredient.subCategory, categoryJPName: ingredient.subCategoryNameJP)
+            ingredientSections.append(section)
+        }
     }
 
-    private func ingredients(from section: Int, month: Int) -> [Ingredient] {
-        guard let ingredientSection = IngredientSection(rawValue: section) else {
-            return []
-        }
+    private func ingredients(section: Int, month: Int) -> [Ingredient] {
+        let ingredientSection = ingredientSections[section]
 
-        switch ingredientSection {
-        case .seafood:
-            return ingredients(from: .seafood, month: selectedMonthNumber)
-        case .vegetable:
-            return ingredients(from: .vegetable, month: selectedMonthNumber)
-        case .fruit:
-            return ingredients(from: .fruit, month: selectedMonthNumber)
-        case .others:
-            return ingredients(from: .other, month: selectedMonthNumber)
-        }
+        return ingredients.filter({ (ingredient) -> Bool in
+            return ingredient.subCategory == ingredientSection.categoryID && ingredient.isSeason(month: month)
+        })
     }
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let count = ingredients(from: section, month: selectedMonthNumber).count
+        let count = ingredients(section: section, month: selectedMonthNumber).count
         return arrangeInSectionCount(count: count)
     }
 
@@ -143,13 +142,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return ingredientSections.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IngredientCollectionViewCell", for: indexPath) as! IngredientCollectionViewCell
 
-        let ingredient = ingredients(from: indexPath.section, month: selectedMonthNumber)[indexPath.row]
+        let ingredient = ingredients(section: indexPath.section, month: selectedMonthNumber)[indexPath.row]
 
         let imageURL = URL(string: ingredient.imageURLString)
         cell.imageView.sd_setImage(with: imageURL, completed: nil)
@@ -164,7 +163,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
 
         if kind == UICollectionView.elementKindSectionHeader {
-            header.label.text = headerTitles[indexPath.section]
+            header.label.text = ingredientSections[indexPath.section].categoryJPName
             header.section = indexPath.section
             header.delegate = self
             return header
@@ -202,7 +201,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let ingredient = ingredients(from: indexPath.section, month: selectedMonthNumber)[indexPath.row]
+        let ingredient = ingredients(section: indexPath.section, month: selectedMonthNumber)[indexPath.row]
 
         let viewController = IngredientViewController.storyboardInstance(ingredient: ingredient)
         navigationController?.pushViewController(viewController, animated: true)
@@ -211,29 +210,11 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 
 extension HomeViewController: CollectionViewSectionHeaderDelegate {
     func seeAllButtonTapped(section: Int) {
-        guard let ingredientSection = IngredientSection(rawValue: section) else {
-            return
-        }
-
+        let ingredientSection = ingredientSections[section]
         let month = DateFormatter().monthSymbols[selectedMonthNumber-1]
+        let categorizedIngredient = ingredients(section: section, month: selectedMonthNumber)
 
-        switch ingredientSection {
-        case .seafood:
-            let seafoods = ingredients(from: .seafood, month: selectedMonthNumber)
-            let viewController = IngredientsViewController.storyboardInstance(ingredients: seafoods, ingredientTypeString: "Seafood", month: month)
-            navigationController?.pushViewController(viewController, animated: true)
-        case .vegetable:
-            let vegetables = ingredients(from: .vegetable, month: selectedMonthNumber)
-            let viewController = IngredientsViewController.storyboardInstance(ingredients: vegetables, ingredientTypeString: "vegetable", month: month)
-            navigationController?.pushViewController(viewController, animated: true)
-        case .fruit:
-            let fruits = ingredients(from: .fruit, month: selectedMonthNumber)
-            let viewController = IngredientsViewController.storyboardInstance(ingredients: fruits, ingredientTypeString: "Fruit", month: month)
-            navigationController?.pushViewController(viewController, animated: true)
-        case .others:
-            let otherIngredients = ingredients(from: .other, month: selectedMonthNumber)
-            let viewController = IngredientsViewController.storyboardInstance(ingredients: otherIngredients, ingredientTypeString: "Other", month: month)
-            navigationController?.pushViewController(viewController, animated: true)
-        }
+        let viewController = IngredientsViewController.storyboardInstance(ingredients: categorizedIngredient, ingredientTypeString: ingredientSection.categoryJPName, month: month)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

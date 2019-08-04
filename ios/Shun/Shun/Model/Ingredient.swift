@@ -2,19 +2,13 @@ import Foundation
 import FirebaseFirestore
 
 class Ingredient {
-
-    enum Category: String {
-        case seafood = "seafood"
-        case vegetable = "vegetable"
-        case fruit = "fruit"
-        case other = "other"
-    }
-    
     var name: String
     var imageURLString: String
-    var category: Category
     var seasons: [Bool]
     var documentID: String
+    var subCategory: String
+    var subCategoryNameJP: String
+    var category: String
 
     init?(document: DocumentSnapshot) {
         guard let data = document.data() else {
@@ -29,9 +23,18 @@ class Ingredient {
             return nil
         }
 
-        guard let category = Category(rawValue: data["category"] as? String ?? "others") else {
+        guard let subCategory = data["sub_category"] as? String else {
             return nil
         }
+
+        guard let subCategoryJP = data["sub_category_name_jp"] as? String else {
+            return nil
+        }
+
+        guard let category = data["category"] as? String else {
+            return nil
+        }
+
 
         guard let seasons = data["seasons"] as? [Bool] else {
             return nil
@@ -42,6 +45,8 @@ class Ingredient {
         self.category = category
         self.seasons = seasons
         self.documentID = document.documentID
+        self.subCategory = subCategory
+        self.subCategoryNameJP = subCategoryJP
     }
 
     func isSeason(month: Int) -> Bool {
