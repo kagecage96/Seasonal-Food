@@ -1,6 +1,6 @@
 require 'csv'
 
-class InsertMekikiArticleScraper < ScraperBase
+class CollectMekikiUrlScraper < ScraperBase
   def run
     file_name = ENV['FILE_NAME']
     raise("please enter source csv file name") if file_name.nil?
@@ -17,7 +17,7 @@ class InsertMekikiArticleScraper < ScraperBase
         image_url = data["image_url"]
         page_url = data["page_url"]
         shun_array = JSON.parse(data["shun_array"])
-        articles_jsons = JSON.parse(data["articles_json"])
+        articles_jsons = data["articles_json"]
         doc = fetch_nokogiri_doc(page_url)
 
         if doc.search('.guide-v').present?
@@ -48,8 +48,10 @@ class InsertMekikiArticleScraper < ScraperBase
       rescue => e
         puts "例外 : #{page_url}"
         puts e
+        ingredient_array << [category, sub_category_en, sub_category_jp, name, image_url, page_url, articles_jsons, shun_array, nil]
       end
     end
+
     CSV.open('ingredient.csv','w') do |csv|
       ingredient_array.each do |a|
         csv << a
