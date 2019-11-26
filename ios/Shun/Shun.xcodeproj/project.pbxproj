@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		32123754BB2209B0BF83BD2B /* Pods_ShunTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDE8C0369110F5367F014A8 /* Pods_ShunTests.framework */; };
+		3B4BA542238D627100694585 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B4BA541238D627100694585 /* GoogleService-Info.plist */; };
 		6464E58B5593B2E92274CE98 /* Pods_ShunUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD478B5F5D825094151D5EC /* Pods_ShunUITests.framework */; };
-		9D4545DE22B649D0007D1DD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D4545DD22B649D0007D1DD0 /* GoogleService-Info.plist */; };
 		9D4545E022BA2279007D1DD0 /* IngredientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4545DF22BA2279007D1DD0 /* IngredientViewController.swift */; };
 		9D4545E222BA2289007D1DD0 /* IngredientViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D4545E122BA2289007D1DD0 /* IngredientViewController.storyboard */; };
 		9D4545E622BA4194007D1DD0 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4545E522BA4194007D1DD0 /* Article.swift */; };
@@ -63,9 +63,9 @@
 		1FD478B5F5D825094151D5EC /* Pods_ShunUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShunUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		334D55BD627AC5EE1F4F1FA4 /* Pods-ShunUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShunUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShunUITests/Pods-ShunUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3847F5E128C8E84F6C0A120D /* Pods-ShunUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShunUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShunUITests/Pods-ShunUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		3B4BA541238D627100694585 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		4C49EDAFD320FFAFAC4B1C27 /* Pods-Shun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Shun/Pods-Shun.debug.xcconfig"; sourceTree = "<group>"; };
 		91692C7C35DA15A890CAFA10 /* Pods-ShunTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShunTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShunTests/Pods-ShunTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9D4545DD22B649D0007D1DD0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9D4545DF22BA2279007D1DD0 /* IngredientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientViewController.swift; sourceTree = "<group>"; };
 		9D4545E122BA2289007D1DD0 /* IngredientViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IngredientViewController.storyboard; sourceTree = "<group>"; };
 		9D4545E522BA4194007D1DD0 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 				9D564F0B22B6171B002A2E42 /* Assets.xcassets */,
 				9D564F0D22B6171B002A2E42 /* LaunchScreen.storyboard */,
 				9D564F1022B6171B002A2E42 /* Info.plist */,
-				9D4545DD22B649D0007D1DD0 /* GoogleService-Info.plist */,
+				3B4BA541238D627100694585 /* GoogleService-Info.plist */,
 			);
 			path = Shun;
 			sourceTree = "<group>";
@@ -392,7 +392,7 @@
 				9D4545E222BA2289007D1DD0 /* IngredientViewController.storyboard in Resources */,
 				9D564F0F22B6171B002A2E42 /* LaunchScreen.storyboard in Resources */,
 				9D564F0C22B6171B002A2E42 /* Assets.xcassets in Resources */,
-				9D4545DE22B649D0007D1DD0 /* GoogleService-Info.plist in Resources */,
+				3B4BA542238D627100694585 /* GoogleService-Info.plist in Resources */,
 				9D4545EC22BF8323007D1DD0 /* ArticleTableViewCell.xib in Resources */,
 				9D6EBCB022C0EC600016938F /* CollectionViewSectionHeader.xib in Resources */,
 				9D564F3722B61FFD002A2E42 /* IngredientCollectionViewCell.xib in Resources */,

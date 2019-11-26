@@ -44,7 +44,7 @@ class IngredientViewController: UIViewController {
             button.backgroundColor = .shun_green
             button.layer.cornerRadius = 20.0
             button.setTitleColor(.white, for: .normal)
-            button.setImage(#imageLiteral(resourceName: "search_icon"), for: .normal)
+            button.setImage(#imageLiteral(resourceName: "SearchIcon"), for: .normal)
             button.tintColor = .white
             button.imageEdgeInsets = UIEdgeInsets(top: 0.0, left: -10.0, bottom: 0.0, right: 0.0)
         }

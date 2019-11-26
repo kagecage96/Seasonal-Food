@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>719783560392-ba1etuhlc8l3nmf8g63f6oico07hah3t.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.719783560392-ba1etuhlc8l3nmf8g63f6oico07hah3t</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBpuGXqhxFcKYHIwWVV7NZRDWtMBa_nW18</string>
+	<key>GCM_SENDER_ID</key>
+	<string>719783560392</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>itadakimasu.Shun</string>
+	<key>PROJECT_ID</key>
+	<string>seasonal-food</string>
+	<key>STORAGE_BUCKET</key>
+	<string>seasonal-food.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:719783560392:ios:b4943a607ae5a2e4</string>
+	<key>DATABASE_URL</key>
+	<string>https://seasonal-food.firebaseio.com</string>
+</dict>
+</plist>
