@@ -163,7 +163,7 @@ class HomeViewController: UIViewController {
         let ingredientSection = ingredientSections[section]
 
         return ingredients.filter({ (ingredient) -> Bool in
-            return ingredient.subCategory == ingredientSection.categoryID && ingredient.isSeason(month: month)
+            return ingredient.subCategory == ingredientSection.categoryID && ingredient.isSeason(month: month) && ingredient.localLocationName == selectedPrefecture.engName
         })
     }
 }
@@ -258,6 +258,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
             let prefectureNames = prefectures.map { $0.name }
             placeTextField.text = prefectureNames[row]
             selectedPrefecture = prefectures[row]
+            ingredientsCollectionView.reloadData()
         }
     }
 
