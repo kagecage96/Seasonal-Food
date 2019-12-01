@@ -14,6 +14,8 @@ class HomeViewController: UIViewController {
     }
 
     @IBOutlet weak var monthTextField: UITextField!
+    @IBOutlet weak var placeTextField: UITextField!
+    
     @IBOutlet weak var ingredientsCollectionView: UICollectionView!
 
     private var ingredientSections: [IngredientSection] = []
@@ -23,6 +25,7 @@ class HomeViewController: UIViewController {
     private let db = Firestore.firestore()
 
     var selectedMonthNumber: Int = 1
+    var selectedPrefecture: Prefecture = .tokyo
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,33 +62,72 @@ class HomeViewController: UIViewController {
     }
 
     @objc private func cancelPicker() {
-        monthTextField.placeholder = "選択してください"
         monthTextField.resignFirstResponder()
+    }
+    
+    @objc private func placePickerDoneButtonTapped() {
+        placeTextField.resignFirstResponder()
+    }
+    
+    @objc private func placePickerCancelButtonTapped() {
+        placeTextField.resignFirstResponder()
     }
 
     private func prepareTextField() {
+        monthTextField.tag = 0
         monthTextField.backgroundColor = .shun_extra_light_gray
         monthTextField.layer.borderColor = UIColor.shun_extra_light_gray.cgColor
         monthTextField.layer.cornerRadius = 20
         monthTextField.font = .shun_normal(size: 16)
         monthTextField.textColor = .shun_black
         monthTextField.text = DateFormatter().monthSymbols[selectedMonthNumber-1]
+        monthTextField.tintColor = .clear
 
-        let toolBar = UIToolbar()
-        toolBar.barStyle = .default
-        toolBar.tintColor = .shun_green
-        toolBar.sizeToFit()
+        let monthToolBar = UIToolbar()
+        monthToolBar.barStyle = .default
+        monthToolBar.tintColor = .shun_green
+        monthToolBar.sizeToFit()
 
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donePicker))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPicker))
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        monthTextField.inputAccessoryView = toolBar
+        let monthDoneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donePicker))
+        let monthSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let monthCancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPicker))
+        monthToolBar.setItems([monthCancelButton, monthSpaceButton, monthDoneButton], animated: false)
+        monthToolBar.isUserInteractionEnabled = true
+        monthTextField.inputAccessoryView = monthToolBar
 
-        let pickerView = UIPickerView()
-        pickerView.delegate = self
-        monthTextField.inputView = pickerView
+        let monthPickerView = UIPickerView()
+        monthPickerView.delegate = self
+        monthPickerView.tag = monthTextField.tag
+        monthTextField.inputView = monthPickerView
+        
+        placeTextField.tag = 1
+        placeTextField.backgroundColor = .shun_extra_light_gray
+        placeTextField.layer.borderColor = UIColor.shun_extra_light_gray.cgColor
+        placeTextField.layer.cornerRadius = 20
+        placeTextField.font = .shun_normal(size: 16)
+        placeTextField.textColor = .shun_black
+        placeTextField.text = Prefecture.tokyo.name
+        placeTextField.tintColor = .clear
+        
+        let placeToolBar = UIToolbar()
+        placeToolBar.barStyle = .default
+        placeToolBar.tintColor = .shun_green
+        placeToolBar.sizeToFit()
+        
+        let placeDoneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(placePickerDoneButtonTapped))
+        let placeSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let placeCancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(placePickerCancelButtonTapped))
+        
+        placeToolBar.setItems([placeCancelButton, placeSpaceButton, placeDoneButton], animated: false)
+        placeToolBar.isUserInteractionEnabled = true
+        
+        placeTextField.inputAccessoryView = placeToolBar
+        
+        let placePickerView = UIPickerView()
+        placePickerView.delegate = self
+        placePickerView.tag = placeTextField.tag
+        placeTextField.inputView = placePickerView
+        
     }
 
     private func handleDocumentChange(_ change: DocumentChange) {
@@ -187,17 +229,36 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return (1...12).count
+        if pickerView.tag == monthTextField.tag {
+            return DateFormatter().monthSymbols.count
+        } else if pickerView.tag == placeTextField.tag {
+            return Prefecture.allCases.count
+        }
+        return 0
     }
 
     func pickerView( _ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return DateFormatter().monthSymbols[row]
+        if pickerView.tag == monthTextField.tag {
+            return DateFormatter().monthSymbols[row]
+        } else if pickerView.tag == placeTextField.tag {
+            let prefectures = Prefecture.allCases
+            let prefectureNames = prefectures.map { $0.name }
+            return prefectureNames[row]
+        }
+        return nil
     }
 
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedMonthNumber = row + 1
-        monthTextField.text = DateFormatter().monthSymbols[row]
-        ingredientsCollectionView.reloadData()
+        if pickerView.tag == monthTextField.tag {
+            selectedMonthNumber = row + 1
+            monthTextField.text = DateFormatter().monthSymbols[row]
+            ingredientsCollectionView.reloadData()
+        }  else if pickerView.tag == placeTextField.tag {
+            let prefectures = Prefecture.allCases
+            let prefectureNames = prefectures.map { $0.name }
+            placeTextField.text = prefectureNames[row]
+            selectedPrefecture = prefectures[row]
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
