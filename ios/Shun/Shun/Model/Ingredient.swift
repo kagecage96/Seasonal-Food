@@ -8,15 +8,16 @@ class Ingredient {
     var documentID: String
     var subCategory: String
     var subCategoryNameJP: String
-    var category: String
     var localLocationName: String
 
     init?(document: DocumentSnapshot) {
         guard let data = document.data() else {
             return nil
         }
+        
+        let nameField = Configuration.shared.language.name + "_name"
 
-        guard let name = data["name"] as? String else {
+        guard let name = data[nameField] as? String else {
             return nil
         }
 
@@ -32,11 +33,6 @@ class Ingredient {
             return nil
         }
 
-        guard let category = data["category"] as? String else {
-            return nil
-        }
-
-
         guard let seasons = data["seasons"] as? [Bool] else {
             return nil
         }
@@ -47,7 +43,6 @@ class Ingredient {
 
         self.name = name
         self.imageURLString = imageURLString
-        self.category = category
         self.seasons = seasons
         self.documentID = document.documentID
         self.subCategory = subCategory

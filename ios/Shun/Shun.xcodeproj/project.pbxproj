@@ -10,6 +10,8 @@
 		32123754BB2209B0BF83BD2B /* Pods_ShunTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDE8C0369110F5367F014A8 /* Pods_ShunTests.framework */; };
 		3B4BA542238D627100694585 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B4BA541238D627100694585 /* GoogleService-Info.plist */; };
 		3B4BA544238D7DE900694585 /* Prefecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4BA543238D7DE900694585 /* Prefecture.swift */; };
+		3BDDF3F9239409BB0099E691 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDF3F8239409BB0099E691 /* Language.swift */; };
+		3BDDF3FB23940CFD0099E691 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDF3FA23940CFD0099E691 /* Configuration.swift */; };
 		6464E58B5593B2E92274CE98 /* Pods_ShunUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD478B5F5D825094151D5EC /* Pods_ShunUITests.framework */; };
 		9D4545E022BA2279007D1DD0 /* IngredientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4545DF22BA2279007D1DD0 /* IngredientViewController.swift */; };
 		9D4545E222BA2289007D1DD0 /* IngredientViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D4545E122BA2289007D1DD0 /* IngredientViewController.storyboard */; };
@@ -66,6 +68,8 @@
 		3847F5E128C8E84F6C0A120D /* Pods-ShunUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShunUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShunUITests/Pods-ShunUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		3B4BA541238D627100694585 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		3B4BA543238D7DE900694585 /* Prefecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefecture.swift; sourceTree = "<group>"; };
+		3BDDF3F8239409BB0099E691 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		3BDDF3FA23940CFD0099E691 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		4C49EDAFD320FFAFAC4B1C27 /* Pods-Shun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Shun/Pods-Shun.debug.xcconfig"; sourceTree = "<group>"; };
 		91692C7C35DA15A890CAFA10 /* Pods-ShunTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShunTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShunTests/Pods-ShunTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9D4545DF22BA2279007D1DD0 /* IngredientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +167,7 @@
 				9D4545E522BA4194007D1DD0 /* Article.swift */,
 				9D4545E722BA4E5D007D1DD0 /* SubArticle.swift */,
 				3B4BA543238D7DE900694585 /* Prefecture.swift */,
+				3BDDF3F8239409BB0099E691 /* Language.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -221,6 +226,7 @@
 				9D564F0422B61719002A2E42 /* AppDelegate.swift */,
 				9D6EBCAB22C0DFC90016938F /* Shun+UIColor.swift */,
 				9D6EBCAD22C0E1220016938F /* Shun+UIFont.swift */,
+				3BDDF3FA23940CFD0099E691 /* Configuration.swift */,
 				9D4545E422BA415D007D1DD0 /* Model */,
 				9D4545E322BA413F007D1DD0 /* View */,
 				9D564F0B22B6171B002A2E42 /* Assets.xcassets */,
@@ -523,11 +529,13 @@
 				9D6EBCAE22C0E1220016938F /* Shun+UIFont.swift in Sources */,
 				9D4545E022BA2279007D1DD0 /* IngredientViewController.swift in Sources */,
 				9D63BE2922EDDD270052A4E9 /* ArticleViewController.swift in Sources */,
+				3BDDF3F9239409BB0099E691 /* Language.swift in Sources */,
 				9D6EBCC022C7D6B10016938F /* ArticleImageTableViewCell.swift in Sources */,
 				9D564F3522B61FCF002A2E42 /* IngredientCollectionViewCell.swift in Sources */,
 				9D564F3922B62957002A2E42 /* Ingredient.swift in Sources */,
 				9D6EBCB322C3A0F90016938F /* IngredientsViewController.swift in Sources */,
 				9D564F0522B61719002A2E42 /* AppDelegate.swift in Sources */,
+				3BDDF3FB23940CFD0099E691 /* Configuration.swift in Sources */,
 				9D564F3322B61C0B002A2E42 /* CollectionViewSectionHeader.swift in Sources */,
 				9D6EBCB822C3BC0E0016938F /* IngredientsCollectionReusableView.swift in Sources */,
 				3B4BA544238D7DE900694585 /* Prefecture.swift in Sources */,

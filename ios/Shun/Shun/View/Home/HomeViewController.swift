@@ -26,6 +26,9 @@ class HomeViewController: UIViewController {
 
     var selectedMonthNumber: Int = 1
     var selectedPrefecture: Prefecture = .tokyo
+    
+    //TODO: When localization you should set value from outside
+    var selectedLanguage: Language = .japanese
 
     override func viewDidLoad() {
         super.viewDidLoad()

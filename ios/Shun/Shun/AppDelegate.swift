@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ]
         UINavigationBar.appearance().tintColor = .shun_gray
         
+        Configuration.shared.language = .japanese
+        
         return true
     }
 
