@@ -27,9 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 NSAttributedString.Key.font: UIFont.shun_bold(size: 16)
         ]
         UINavigationBar.appearance().tintColor = .shun_gray
-        
-        Configuration.shared.language = .japanese
-        
+                
         return true
     }
 
