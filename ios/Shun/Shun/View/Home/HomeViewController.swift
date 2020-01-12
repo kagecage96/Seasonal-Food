@@ -164,7 +164,7 @@ class HomeViewController: UIViewController {
         let ingredientSection = ingredientSections[section]
 
         return ingredients.filter({ (ingredient) -> Bool in
-            return ingredient.subCategory == ingredientSection.categoryID && ingredient.isSeason(month: month) && ingredient.localLocationName == selectedPrefecture.engName
+            return ingredient.subCategory == ingredientSection.categoryID && ingredient.isSeason(month: month) && ingredient.locations.contains(selectedPrefecture.engName)
         })
     }
 }

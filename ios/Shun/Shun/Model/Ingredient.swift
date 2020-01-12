@@ -8,7 +8,7 @@ class Ingredient {
     var documentID: String
     var subCategory: String
     var subCategoryNameJP: String
-    var localLocationName: String
+    var locations: [String]
 
     init?(document: DocumentSnapshot) {
         guard let data = document.data() else {
@@ -37,7 +37,7 @@ class Ingredient {
             return nil
         }
         
-        guard let localLocationName = data["local_location_name"] as? String else {
+        guard let locations = data["locations"] as? [String] else {
             return nil
         }
 
@@ -47,7 +47,7 @@ class Ingredient {
         self.documentID = document.documentID
         self.subCategory = subCategory
         self.subCategoryNameJP = subCategoryJP
-        self.localLocationName = localLocationName
+        self.locations = locations
     }
 
     func isSeason(month: Int) -> Bool {
