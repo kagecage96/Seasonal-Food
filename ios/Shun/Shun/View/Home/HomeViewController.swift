@@ -26,9 +26,6 @@ class HomeViewController: UIViewController {
 
     var selectedMonthNumber: Int = 1
     var selectedPrefecture: Prefecture = .tokyo
-    
-    //TODO: When localization you should set value from outside
-    var selectedLanguage: Language = .japanese
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,7 +106,8 @@ class HomeViewController: UIViewController {
         placeTextField.layer.cornerRadius = 20
         placeTextField.font = .shun_normal(size: 16)
         placeTextField.textColor = .shun_black
-        placeTextField.text = Prefecture.tokyo.name
+        
+        placeTextField.text = Prefecture.tokyo.name(language: Configuration.shared.language).capitalized
         placeTextField.tintColor = .clear
         
         let placeToolBar = UIToolbar()
@@ -244,9 +242,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         if pickerView.tag == monthTextField.tag {
             return DateFormatter().monthSymbols[row]
         } else if pickerView.tag == placeTextField.tag {
-            let prefectures = Prefecture.allCases
-            let prefectureNames = prefectures.map { $0.name }
-            return prefectureNames[row]
+            return prefectureNames()[row]
         }
         return nil
     }
@@ -258,8 +254,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
             ingredientsCollectionView.reloadData()
         }  else if pickerView.tag == placeTextField.tag {
             let prefectures = Prefecture.allCases
-            let prefectureNames = prefectures.map { $0.name }
-            placeTextField.text = prefectureNames[row]
+            placeTextField.text = prefectureNames()[row]
             selectedPrefecture = prefectures[row]
             ingredientsCollectionView.reloadData()
         }
@@ -270,6 +265,11 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 
         let viewController = IngredientViewController.storyboardInstance(ingredient: ingredient)
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    private func prefectureNames() -> [String] {
+        let prefectures = Prefecture.allCases
+        return prefectures.map { $0.name(language: Configuration.shared.language).capitalized }
     }
 }
 

@@ -150,4 +150,12 @@ enum Prefecture: CaseIterable {
           case .okinawa  : return "okinawa"
           }
       }
+    
+    func name(language: Language) -> String {
+        if language == .japanese {
+            return name
+        } else {
+            return engName
+        }
+    }
 }
