@@ -22,7 +22,7 @@ class HomeViewController: UIViewController {
     private var ingredients: [Ingredient] = []
     private var ingredientsListener: ListenerRegistration?
     
-    private var subCategories: [SubCategory] = []
+    private var subCategoryIDs: [String] = []
         
     private let headerTitles = ["Seafood", "Vegetable", "Fruit", "Others"]
     private let db = Firestore.firestore()
@@ -153,16 +153,16 @@ class HomeViewController: UIViewController {
     }
 
     private func insertNewCategoryIfNeeded(_ ingredient: Ingredient) {
-        let shouldAddNewSection = !self.subCategories.contains { (category) -> Bool in
-            category.documentID == ingredient.subCategoryID
+        
+        let shouldAddNewSection = !self.subCategoryIDs.contains { (categoryID) -> Bool in
+            return categoryID == ingredient.subCategoryID
         }
-
+                
         if shouldAddNewSection {
+            self.subCategoryIDs.append(ingredient.subCategoryID)
             db.collection("SubCategories").document(ingredient.subCategoryID).getDocument { (document, error) in
                 if let document = document, document.exists {
                     guard let category = SubCategory(document: document) else { return }
-                    print("hoge")
-                    self.subCategories.append(category)
                     let section = IngredientSection(categoryID: ingredient.subCategoryID, categoryJPName: category.name)
                     self.ingredientSections.append(section)
                     self.ingredientsCollectionView.reloadData()
