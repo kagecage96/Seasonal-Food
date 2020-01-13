@@ -21,6 +21,9 @@ class HomeViewController: UIViewController {
     private var ingredientSections: [IngredientSection] = []
     private var ingredients: [Ingredient] = []
     private var ingredientsListener: ListenerRegistration?
+    
+    private var subCategories: [SubCategory] = []
+        
     private let headerTitles = ["Seafood", "Vegetable", "Fruit", "Others"]
     private let db = Firestore.firestore()
 
@@ -150,13 +153,23 @@ class HomeViewController: UIViewController {
     }
 
     private func insertNewCategoryIfNeeded(_ ingredient: Ingredient) {
-        let shouldAddNewSection = !ingredientSections.contains { (section) -> Bool in
-            section.categoryID == ingredient.subCategory
+        let shouldAddNewSection = !self.subCategories.contains { (category) -> Bool in
+            category.documentID == ingredient.subCategoryID
         }
 
         if shouldAddNewSection {
-            let section = IngredientSection(categoryID: ingredient.subCategory, categoryJPName: ingredient.subCategoryNameJP)
-            ingredientSections.append(section)
+            db.collection("SubCategories").document(ingredient.subCategoryID).getDocument { (document, error) in
+                if let document = document, document.exists {
+                    guard let category = SubCategory(document: document) else { return }
+                    print("hoge")
+                    self.subCategories.append(category)
+                    let section = IngredientSection(categoryID: ingredient.subCategoryID, categoryJPName: category.name)
+                    self.ingredientSections.append(section)
+                    self.ingredientsCollectionView.reloadData()
+                } else {
+                    print("Document does not exist")
+                }
+            }
         }
     }
 
@@ -164,7 +177,7 @@ class HomeViewController: UIViewController {
         let ingredientSection = ingredientSections[section]
 
         return ingredients.filter({ (ingredient) -> Bool in
-            return ingredient.subCategory == ingredientSection.categoryID && ingredient.isSeason(month: month) && ingredient.locations.contains(selectedPrefecture.engName)
+            return ingredient.subCategoryID == ingredientSection.categoryID && ingredient.isSeason(month: month) && ingredient.locations.contains(selectedPrefecture.engName)
         })
     }
 }

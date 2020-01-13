@@ -6,8 +6,7 @@ class Ingredient {
     var imageURLString: String
     var seasons: [Bool]
     var documentID: String
-    var subCategory: String
-    var subCategoryNameJP: String
+    var subCategoryID: String
     var locations: [String]
 
     init?(document: DocumentSnapshot) {
@@ -25,14 +24,6 @@ class Ingredient {
             return nil
         }
 
-        guard let subCategory = data["sub_category"] as? String else {
-            return nil
-        }
-
-        guard let subCategoryJP = data["sub_category_name_jp"] as? String else {
-            return nil
-        }
-
         guard let seasons = data["seasons"] as? [Bool] else {
             return nil
         }
@@ -40,13 +31,16 @@ class Ingredient {
         guard let locations = data["locations"] as? [String] else {
             return nil
         }
+        
+        guard let subCategoryID = data["sub_category_id"] as? String else {
+            return nil
+        }
 
         self.name = name
         self.imageURLString = imageURLString
         self.seasons = seasons
         self.documentID = document.documentID
-        self.subCategory = subCategory
-        self.subCategoryNameJP = subCategoryJP
+        self.subCategoryID = subCategoryID
         self.locations = locations
     }
 
