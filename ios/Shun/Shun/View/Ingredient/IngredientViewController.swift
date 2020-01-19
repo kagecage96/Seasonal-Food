@@ -110,7 +110,13 @@ class IngredientViewController: UIViewController {
         guard let name = ingredient?.name else {
             return
         }
-        let urlString = "https://www.google.co.jp/search?q=\(name) レシピ"
+        
+        var urlString = ""
+        if Configuration.shared.language == .english {
+            urlString = "https://www.google.co.jp/search?q=\(name) recipe"
+        } else {
+            urlString = "https://www.google.co.jp/search?q=\(name) レシピ"
+        }
         let encodeUrlString: String = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let url = URL(string: encodeUrlString)!
 
@@ -123,7 +129,13 @@ class IngredientViewController: UIViewController {
         guard let name = ingredient?.name else {
             return
         }
-        let urlString = "https://www.google.co.jp/search?q=\(name) レストラン"
+        var urlString = ""
+        if Configuration.shared.language == .english {
+            urlString = "https://www.google.co.jp/search?q=\(name) restaurant"
+        } else {
+            urlString = "https://www.google.co.jp/search?q=\(name) レストラン"
+        }
+
         let encodeUrlString: String = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let url = URL(string: encodeUrlString)!
 
