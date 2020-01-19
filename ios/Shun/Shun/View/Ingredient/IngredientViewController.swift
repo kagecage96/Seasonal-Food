@@ -62,7 +62,7 @@ class IngredientViewController: UIViewController {
         let tableFooterView = UIView(frame: CGRect.zero)
         tableView.tableFooterView = tableFooterView
 
-        articlesListener = db.collection("Articles").whereField("ingredient_id", isEqualTo: ingredient.documentID).addSnapshotListener({ (snapshot, error) in
+        articlesListener = db.collection("Articles").whereField("ingredient_id", isEqualTo: ingredient.documentID).whereField("language", isEqualTo: Configuration.shared.language.name).addSnapshotListener({ (snapshot, error) in
             if let error = error {
                 print(error)
             }
