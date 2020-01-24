@@ -21,5 +21,22 @@ enum Language {
             return "english"
         }
     }
-
+    
+    var localeString: String {
+        switch self {
+        case .japanese:
+            return "jp"
+        case .english:
+            return "en"
+        }
+    }
+    
+    var localeIdentifer: String {
+        switch self {
+        case .japanese:
+            return "ja_JP"
+        case .english:
+            return "en_US"
+        }
+    }
 }

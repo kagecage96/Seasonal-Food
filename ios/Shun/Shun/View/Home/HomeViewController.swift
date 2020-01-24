@@ -83,7 +83,7 @@ class HomeViewController: UIViewController {
         monthTextField.layer.cornerRadius = 20
         monthTextField.font = .shun_normal(size: 16)
         monthTextField.textColor = .shun_black
-        monthTextField.text = DateFormatter().monthSymbols[selectedMonthNumber-1]
+        monthTextField.text = Date().monthSymbols()[0]
         monthTextField.tintColor = .clear
 
         let monthToolBar = UIToolbar()
@@ -244,7 +244,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == monthTextField.tag {
-            return DateFormatter().monthSymbols.count
+            return Date().monthSymbols().count
         } else if pickerView.tag == placeTextField.tag {
             return Prefecture.allCases.count
         }
@@ -253,7 +253,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 
     func pickerView( _ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView.tag == monthTextField.tag {
-            return DateFormatter().monthSymbols[row]
+            return Date().monthSymbols()[row]
         } else if pickerView.tag == placeTextField.tag {
             return prefectureNames()[row]
         }
@@ -263,7 +263,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.tag == monthTextField.tag {
             selectedMonthNumber = row + 1
-            monthTextField.text = DateFormatter().monthSymbols[row]
+            monthTextField.text = Date().monthSymbols()[row]
             ingredientsCollectionView.reloadData()
         }  else if pickerView.tag == placeTextField.tag {
             let prefectures = Prefecture.allCases
